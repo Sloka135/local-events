@@ -1,7 +1,7 @@
 """
 styles.py
 =========
-Custom CSS styles for the Hyperlocal Events Streamlit app.
+Custom CSS styles and constants for the Hyperlocal Events Streamlit app.
 """
 
 CUSTOM_CSS = """
@@ -184,30 +184,26 @@ header { visibility: hidden; }
 
 </style>
 """
-CUSTOM_CSS = """
-<style>
-...
-</style>
-"""
+
 CATEGORY_EMOJIS = {
-    "Music":        "🎵",
-    "Sports":       "⚽",
-    "Food":         "🍕",
-    "Art":          "🎨",
-    "Technology":   "💻",
-    "Education":    "📚",
-    "Health":       "🏃",
-    "Business":     "💼",
-    "Community":    "🤝",
-    "Entertainment":"🎭",
-    "Outdoor":      "🌿",
-    "Fitness":      "💪",
-    "Gaming":       "🎮",
-    "Fashion":      "👗",
-    "Travel":       "✈️",
-    "Networking":   "🔗",
-    "Comedy":       "😂",
-    "Film":         "🎬",
-    "Science":      "🔬",
-    "Other":        "📌",
+    "Music":         "🎵",
+    "Sports":        "⚽",
+    "Food":          "🍕",
+    "Art":           "🎨",
+    "Technology":    "💻",
+    "Education":     "📚",
+    "Health":        "🏃",
+    "Business":      "💼",
+    "Community":     "🤝",
+    "Entertainment": "🎭",
+    "Outdoor":       "🌿",
+    "Fitness":       "💪",
+    "Gaming":        "🎮",
+    "Fashion":       "👗",
+    "Travel":        "✈️",
+    "Networking":    "🔗",
+    "Comedy":        "😂",
+    "Film":          "🎬",
+    "Science":       "🔬",
+    "Other":         "📌",
 }
