@@ -184,3 +184,25 @@ header { visibility: hidden; }
 
 </style>
 """
+CATEGORY_EMOJIS = {
+    "Music":        "🎵",
+    "Sports":       "⚽",
+    "Food":         "🍕",
+    "Art":          "🎨",
+    "Technology":   "💻",
+    "Education":    "📚",
+    "Health":       "🏃",
+    "Business":     "💼",
+    "Community":    "🤝",
+    "Entertainment":"🎭",
+    "Outdoor":      "🌿",
+    "Fitness":      "💪",
+    "Gaming":       "🎮",
+    "Fashion":      "👗",
+    "Travel":       "✈️",
+    "Networking":   "🔗",
+    "Comedy":       "😂",
+    "Film":         "🎬",
+    "Science":      "🔬",
+    "Other":        "📌",
+}
