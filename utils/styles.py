@@ -207,3 +207,5 @@ CATEGORY_EMOJIS = {
     "Science":       "🔬",
     "Other":         "📌",
 }
+
+CATEGORIES = list(CATEGORY_EMOJIS.keys())
