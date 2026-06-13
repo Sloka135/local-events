@@ -6,9 +6,11 @@ import streamlit as st
 from utils.database import get_stats, get_upcoming_events
 from utils.styles import CATEGORY_EMOJIS
 
+
 def render():
     """Render the Home page."""
-    # ── Hero Section ─────────────────────────────────────────────────────────
+
+    # ── Hero Section ──────────────────────────────────────────────────────────
     st.markdown("""
     <div class="hero-section">
         <div class="hero-title">Discover Events<br><span>Near You</span></div>
@@ -23,10 +25,10 @@ def render():
     stats = get_stats()
     col1, col2, col3, col4 = st.columns(4)
     stat_items = [
-        (col1, stats["total_events"],     "Total Events",      "📅"),
-        (col2, stats["upcoming_events"],  "Upcoming Events",   "🔜"),
-        (col3, stats["categories"],       "Categories",        "🏷️"),
-        (col4, stats["total_favorites"],  "Saved Favourites",  "❤️"),
+        (col1, stats["total_events"],    "Total Events",     "📅"),
+        (col2, stats["upcoming_events"], "Upcoming Events",  "🔜"),
+        (col3, stats["categories"],      "Categories",       "🏷️"),
+        (col4, stats["total_favorites"], "Saved Favourites", "❤️"),
     ]
     for col, number, label, icon in stat_items:
         with col:
@@ -44,10 +46,10 @@ def render():
     st.markdown('<div class="section-header">Explore the Platform</div>', unsafe_allow_html=True)
 
     nav_cards = [
-        ("🔍", "Discover Events",     "Search and filter events near you",          "Discover Events"),
-        ("➕", "Create Event",         "Share your event with the community",         "Create Event"),
-        ("❤️",  "My Favourites",        "View and manage your saved events",           "Favorites"),
-        ("📊", "Analytics Dashboard", "Visualise trends and event statistics",       "Analytics Dashboard"),
+        ("🔍", "Discover Events",     "Search and filter events near you",        "Discover Events"),
+        ("➕", "Create Event",         "Share your event with the community",       "Create Event"),
+        ("❤️",  "My Favourites",        "View and manage your saved events",         "Favorites"),
+        ("📊", "Analytics Dashboard", "Visualise trends and event statistics",     "Analytics Dashboard"),
     ]
 
     cols = st.columns(4)
@@ -60,7 +62,7 @@ def render():
                 <div class="nav-card-desc">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
-            if st.button(f"Go →", key=f"home_{page}", use_container_width=True):
+            if st.button("Go →", key=f"home_{page}", use_container_width=True):
                 st.session_state["page"] = page
                 st.rerun()
 
@@ -82,6 +84,8 @@ def render():
     else:
         for _, row in upcoming.iterrows():
             emoji = CATEGORY_EMOJIS.get(row["category"], "📌")
+            desc = str(row.get("description", ""))
+            short_desc = desc[:140] + ("..." if len(desc) > 140 else "")
             st.markdown(f"""
             <div class="event-card">
                 <div class="category-badge">{emoji} {row['category']}</div>
@@ -90,11 +94,11 @@ def render():
                     <span>📅 {row['date']}</span>
                     <span>📍 {row['location']}</span>
                 </div>
-                <div class="event-description">{str(row.get('description',''))[:140]}{"..." if len(str(row.get('description',''))) > 140 else ""}</div>
+                <div class="event-description">{short_desc}</div>
             </div>
             """, unsafe_allow_html=True)
 
-    # ── Category chips ────────────────────────────────────────────────────────
+    # ── Category Chips ────────────────────────────────────────────────────────
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="section-header">Browse by Category</div>', unsafe_allow_html=True)
 
