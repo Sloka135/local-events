@@ -2,15 +2,12 @@
 Home page for Hyperlocal Event Discovery Platform.
 Displays hero section, platform stats, and quick navigation cards.
 """
-
 import streamlit as st
 from utils.database import get_stats, get_upcoming_events
 from utils.styles import CATEGORY_EMOJIS
 
-
 def render():
     """Render the Home page."""
-
     # ── Hero Section ─────────────────────────────────────────────────────────
     st.markdown("""
     <div class="hero-section">
@@ -47,10 +44,10 @@ def render():
     st.markdown('<div class="section-header">Explore the Platform</div>', unsafe_allow_html=True)
 
     nav_cards = [
-        ("🔍", "Discover Events",      "Search and filter events near you",            "Discover Events"),
-        ("➕", "Create Event",          "Share your event with the community",           "Create Event"),
-        ("❤️",  "My Favourites",         "View and manage your saved events",             "Favorites"),
-        ("📊", "Analytics Dashboard",  "Visualise trends and event statistics",         "Analytics Dashboard"),
+        ("🔍", "Discover Events",     "Search and filter events near you",          "Discover Events"),
+        ("➕", "Create Event",         "Share your event with the community",         "Create Event"),
+        ("❤️",  "My Favourites",        "View and manage your saved events",           "Favorites"),
+        ("📊", "Analytics Dashboard", "Visualise trends and event statistics",       "Analytics Dashboard"),
     ]
 
     cols = st.columns(4)
@@ -63,7 +60,7 @@ def render():
                 <div class="nav-card-desc">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
-            if st.button(f"Go →", key=f"nav_{page}", use_container_width=True):
+            if st.button(f"Go →", key=f"home_{page}", use_container_width=True):
                 st.session_state["page"] = page
                 st.rerun()
 
@@ -75,7 +72,6 @@ def render():
     st.markdown('<div class="section-sub">Next 5 events on the calendar</div>', unsafe_allow_html=True)
 
     upcoming = get_upcoming_events(5)
-
     if upcoming.empty:
         st.markdown("""
         <div class="empty-state">
