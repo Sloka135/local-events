@@ -181,8 +181,17 @@ h1, h2, h3 {
 #MainMenu { visibility: hidden; }
 footer { visibility: hidden; }
 header { visibility: hidden; }
+/* --- Hide Streamlit default page nav --- */
+[data-testid="stSidebarNav"] {
+    display: none !important;
+}
 
+/* --- Hide Streamlit default elements ---- */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+header { visibility: hidden; }
 </style>
+
 """
 
 CATEGORY_EMOJIS = {
