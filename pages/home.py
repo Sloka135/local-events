@@ -20,7 +20,6 @@ def render():
         </div>
     </div>
     """, unsafe_allow_html=True)
-
     # ── Platform Statistics ───────────────────────────────────────────────────
     stats = get_stats()
     col1, col2, col3, col4 = st.columns(4)

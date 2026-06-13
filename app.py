@@ -17,7 +17,7 @@ import streamlit as st
 
 # ── Page config (must be first Streamlit call) ────────────────────────────────
 st.set_page_config(
-    page_title="Hyperlocal Events",
+    page_title="Radius",
     page_icon="📍",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -52,8 +52,8 @@ with st.sidebar:
     st.markdown("""
 <div style="padding:1.2rem 0 1.6rem 0;text-align:center;">
     <div style="font-size:2rem;margin-bottom:0.3rem;">📍</div>
-    <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#E0E0FF;letter-spacing:-0.01em;line-height:1.2;">
-        Hyperlocal<br>Events
+   <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#E0E0FF;letter-spacing:-0.01em;line-height:1.2;">
+        Radius
     </div>
     <div style="font-size:0.72rem;color:#4A4A7A;margin-top:0.3rem;">
         Discover · Create · Connect
