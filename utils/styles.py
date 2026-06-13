@@ -184,6 +184,11 @@ header { visibility: hidden; }
 
 </style>
 """
+CUSTOM_CSS = """
+<style>
+...
+</style>
+"""
 CATEGORY_EMOJIS = {
     "Music":        "🎵",
     "Sports":       "⚽",
