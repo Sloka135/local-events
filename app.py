@@ -1,5 +1,6 @@
+"""
 Hyperlocal Event Discovery Platform
-=====================================
+====================================
 Main entry point for the Streamlit multi-page application.
 
 Run with:
