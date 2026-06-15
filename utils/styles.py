@@ -1,7 +1,7 @@
 """
 styles.py
 =========
-Custom CSS styles and constants for the Hyperlocal Events Streamlit app.
+Custom CSS styles and constants for the Radius Streamlit app.
 """
 
 CUSTOM_CSS = """
@@ -28,6 +28,11 @@ html, body, [class*="css"] {
 
 [data-testid="stSidebar"] * {
     color: #E0E0FF !important;
+}
+
+/* --- Hide Streamlit default page nav --- */
+[data-testid="stSidebarNav"] {
+    display: none !important;
 }
 
 /* --- Buttons ---------------------------- */
@@ -62,22 +67,6 @@ html, body, [class*="css"] {
 .stTextArea > div > div > textarea:focus {
     border-color: #6C63FF !important;
     box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2) !important;
-}
-
-/* --- Cards ------------------------------ */
-.event-card {
-    background: #13131F;
-    border: 1px solid #1E1E30;
-    border-radius: 12px;
-    padding: 1.2rem;
-    margin-bottom: 1rem;
-    transition: all 0.2s ease;
-}
-
-.event-card:hover {
-    border-color: #6C63FF;
-    box-shadow: 0 4px 24px rgba(108, 99, 255, 0.15);
-    transform: translateY(-2px);
 }
 
 /* --- Metric boxes ----------------------- */
@@ -177,21 +166,202 @@ h1, h2, h3 {
     overflow: hidden;
 }
 
-/* --- Hide Streamlit default elements ---- */
-#MainMenu { visibility: hidden; }
-footer { visibility: hidden; }
-header { visibility: hidden; }
-/* --- Hide Streamlit default page nav --- */
-[data-testid="stSidebarNav"] {
-    display: none !important;
+/* --- Hero section ----------------------- */
+.hero-section {
+    padding: 2.5rem 0 1.5rem 0;
+    margin-bottom: 1rem;
+}
+
+.hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #E0E0FF;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+}
+
+.hero-title span {
+    background: linear-gradient(135deg, #6C63FF, #4ECDC4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: #7070A0;
+    max-width: 560px;
+    line-height: 1.6;
+}
+
+/* --- Stat cards ------------------------- */
+.stat-card {
+    background: #13131F;
+    border: 1px solid #1E1E30;
+    border-radius: 12px;
+    padding: 1.2rem;
+    text-align: center;
+}
+
+.stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #6C63FF;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #6A6A9A;
+    margin-top: 0.2rem;
+}
+
+/* --- Nav cards -------------------------- */
+.nav-card {
+    background: #13131F;
+    border: 1px solid #1E1E30;
+    border-radius: 12px;
+    padding: 1.2rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.nav-card:hover {
+    border-color: #6C63FF;
+}
+
+.nav-card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.4rem;
+}
+
+.nav-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #E0E0FF;
+    margin-bottom: 0.3rem;
+}
+
+.nav-card-desc {
+    font-size: 0.78rem;
+    color: #6A6A9A;
+}
+
+/* --- Event Cards ----------------------- */
+.event-card {
+    background: #13131F;
+    border: 1px solid #1E1E30;
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+}
+
+.event-card:hover {
+    border-color: #6C63FF;
+    box-shadow: 0 4px 24px rgba(108, 99, 255, 0.15);
+}
+
+.event-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #E0E0FF;
+    margin: 0.5rem 0 0.4rem 0;
+}
+
+.event-meta {
+    display: flex;
+    gap: 1.2rem;
+    font-size: 0.82rem;
+    color: #6A6A9A;
+    margin-bottom: 0.5rem;
+}
+
+.event-description {
+    font-size: 0.88rem;
+    color: #9090B0;
+    line-height: 1.5;
+}
+
+/* --- Category & score badges ------------ */
+.category-badge {
+    display: inline-block;
+    background: rgba(108, 99, 255, 0.12);
+    color: #A5A0FF;
+    border: 1px solid rgba(108, 99, 255, 0.25);
+    border-radius: 20px;
+    padding: 0.15rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+}
+
+.distance-badge {
+    display: inline-block;
+    background: rgba(78, 205, 196, 0.12);
+    color: #4ECDC4;
+    border: 1px solid rgba(78, 205, 196, 0.25);
+    border-radius: 20px;
+    padding: 0.15rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-left: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+
+.score-badge {
+    display: inline-block;
+    background: rgba(255, 193, 7, 0.12);
+    color: #FFC107;
+    border: 1px solid rgba(255, 193, 7, 0.25);
+    border-radius: 20px;
+    padding: 0.15rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-left: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+
+/* --- Section headers ------------------- */
+.section-header {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #E0E0FF;
+    margin-bottom: 0.2rem;
+}
+
+.section-sub {
+    font-size: 0.88rem;
+    color: #6A6A9A;
+    margin-bottom: 1.2rem;
+}
+
+/* --- Empty state ------------------------ */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state-text {
+    font-size: 1rem;
+    color: #6A6A9A;
 }
 
 /* --- Hide Streamlit default elements ---- */
 #MainMenu { visibility: hidden; }
 footer { visibility: hidden; }
 header { visibility: hidden; }
-</style>
 
+</style>
 """
 
 CATEGORY_EMOJIS = {
