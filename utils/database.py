@@ -1,5 +1,5 @@
 """
-Database utility module for Hyperlocal Event Discovery Platform.
+Database utility module for Radius.
 Handles SQLite database creation, connections, and CRUD operations.
 """
 
@@ -50,6 +50,34 @@ def init_database():
         )
     """)
 
+    # Create registrations table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS registrations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            event_id INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            phone TEXT,
+            registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
+            UNIQUE(event_id, email)
+        )
+    """)
+
+    # Create reminders table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS reminders (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            event_id INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            remind_days_before INTEGER DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
+            UNIQUE(event_id, email)
+        )
+    """)
+
     conn.commit()
 
     # Seed with sample data if empty
@@ -96,7 +124,6 @@ def _seed_sample_data(cursor):
         ("AI & ML Conference", "Technology", "ISB Hyderabad", 17.5353, 78.3463,
          "2025-08-16", "Full-day conference on the latest in Artificial Intelligence and Machine Learning. 20+ speakers."),
     ]
-
     cursor.executemany("""
         INSERT INTO events (title, category, location, latitude, longitude, date, description)
         VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -106,7 +133,6 @@ def _seed_sample_data(cursor):
 # ─── Events CRUD ─────────────────────────────────────────────────────────────
 
 def get_all_events() -> pd.DataFrame:
-    """Retrieve all events as a DataFrame."""
     conn = get_connection()
     df = pd.read_sql_query("SELECT * FROM events ORDER BY date ASC", conn)
     conn.close()
@@ -114,7 +140,6 @@ def get_all_events() -> pd.DataFrame:
 
 
 def get_event_by_id(event_id: int) -> dict | None:
-    """Retrieve a single event by its ID."""
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM events WHERE id = ?", (event_id,))
@@ -124,7 +149,6 @@ def get_event_by_id(event_id: int) -> dict | None:
 
 
 def create_event(title, category, location, latitude, longitude, date, description) -> int:
-    """Insert a new event and return its ID."""
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -138,7 +162,6 @@ def create_event(title, category, location, latitude, longitude, date, descripti
 
 
 def delete_event(event_id: int):
-    """Delete an event by ID."""
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM events WHERE id = ?", (event_id,))
@@ -149,7 +172,6 @@ def delete_event(event_id: int):
 # ─── Favorites CRUD ──────────────────────────────────────────────────────────
 
 def get_favorites() -> pd.DataFrame:
-    """Retrieve all favorited events as a DataFrame."""
     conn = get_connection()
     df = pd.read_sql_query("""
         SELECT e.*, f.id as fav_id, f.added_at
@@ -162,7 +184,6 @@ def get_favorites() -> pd.DataFrame:
 
 
 def add_favorite(event_id: int) -> bool:
-    """Add an event to favorites. Returns True on success, False if already exists."""
     try:
         conn = get_connection()
         cursor = conn.cursor()
@@ -175,7 +196,6 @@ def add_favorite(event_id: int) -> bool:
 
 
 def remove_favorite(event_id: int):
-    """Remove an event from favorites."""
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM favorites WHERE event_id = ?", (event_id,))
@@ -184,7 +204,6 @@ def remove_favorite(event_id: int):
 
 
 def is_favorite(event_id: int) -> bool:
-    """Check if an event is in favorites."""
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT id FROM favorites WHERE event_id = ?", (event_id,))
@@ -193,10 +212,96 @@ def is_favorite(event_id: int) -> bool:
     return result is not None
 
 
+# ─── Registrations CRUD ──────────────────────────────────────────────────────
+
+def register_for_event(event_id: int, name: str, email: str, phone: str = "") -> bool:
+    """Register a user for an event. Returns True on success, False if already registered."""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO registrations (event_id, name, email, phone)
+            VALUES (?, ?, ?, ?)
+        """, (event_id, name, email, phone))
+        conn.commit()
+        conn.close()
+        return True
+    except sqlite3.IntegrityError:
+        return False
+
+
+def is_registered(event_id: int, email: str) -> bool:
+    """Check if an email is already registered for an event."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT id FROM registrations WHERE event_id = ? AND email = ?",
+        (event_id, email)
+    )
+    result = cursor.fetchone()
+    conn.close()
+    return result is not None
+
+
+def get_registration_count(event_id: int) -> int:
+    """Get number of registrations for an event."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT COUNT(*) FROM registrations WHERE event_id = ?",
+        (event_id,)
+    )
+    count = cursor.fetchone()[0]
+    conn.close()
+    return count
+
+
+# ─── Reminders CRUD ──────────────────────────────────────────────────────────
+
+def set_reminder(event_id: int, name: str, email: str, days_before: int = 1) -> bool:
+    """Set a reminder for an event. Returns True on success, False if already set."""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO reminders (event_id, name, email, remind_days_before)
+            VALUES (?, ?, ?, ?)
+        """, (event_id, name, email, days_before))
+        conn.commit()
+        conn.close()
+        return True
+    except sqlite3.IntegrityError:
+        return False
+
+
+def has_reminder(event_id: int, email: str) -> bool:
+    """Check if a reminder is already set for this event and email."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT id FROM reminders WHERE event_id = ? AND email = ?",
+        (event_id, email)
+    )
+    result = cursor.fetchone()
+    conn.close()
+    return result is not None
+
+
+def remove_reminder(event_id: int, email: str):
+    """Remove a reminder."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "DELETE FROM reminders WHERE event_id = ? AND email = ?",
+        (event_id, email)
+    )
+    conn.commit()
+    conn.close()
+
+
 # ─── Analytics helpers ────────────────────────────────────────────────────────
 
 def get_stats() -> dict:
-    """Return platform-level statistics."""
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -213,17 +318,20 @@ def get_stats() -> dict:
     cursor.execute("SELECT COUNT(DISTINCT category) FROM events")
     categories = cursor.fetchone()[0]
 
+    cursor.execute("SELECT COUNT(*) FROM registrations")
+    total_registrations = cursor.fetchone()[0]
+
     conn.close()
     return {
-        "total_events": total_events,
-        "total_favorites": total_favorites,
-        "upcoming_events": upcoming,
-        "categories": categories,
+        "total_events":        total_events,
+        "total_favorites":     total_favorites,
+        "upcoming_events":     upcoming,
+        "categories":          categories,
+        "total_registrations": total_registrations,
     }
 
 
 def get_events_by_category() -> pd.DataFrame:
-    """Return event counts grouped by category."""
     conn = get_connection()
     df = pd.read_sql_query("""
         SELECT category, COUNT(*) as count
@@ -234,7 +342,6 @@ def get_events_by_category() -> pd.DataFrame:
 
 
 def get_upcoming_events(limit: int = 5) -> pd.DataFrame:
-    """Return the next N upcoming events."""
     today = datetime.now().date().isoformat()
     conn = get_connection()
     df = pd.read_sql_query("""

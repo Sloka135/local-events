@@ -1,12 +1,16 @@
 """
 Discover Events page for Radius.
 Provides search, category/date filters, nearby filter, event cards,
-add-to-favorites, map view, and content-based recommendations.
+add-to-favorites, registration, reminders, map view, and recommendations.
 """
 
 import streamlit as st
 from streamlit_folium import st_folium
-from utils.database import get_all_events, add_favorite, is_favorite
+from utils.database import (
+    get_all_events, add_favorite, is_favorite,
+    register_for_event, is_registered, get_registration_count,
+    set_reminder, has_reminder,
+)
 from utils.recommender import search_events, filter_nearby_events, recommend_events
 from utils.maps import build_events_map
 from utils.styles import CATEGORIES, CATEGORY_EMOJIS
@@ -64,43 +68,119 @@ def render():
             st.info("🔭 No events match your filters. Try broadening your search.")
         else:
             for _, row in filtered.iterrows():
-                emoji = CATEGORY_EMOJIS.get(row["category"], "📌")
-                fav   = is_favorite(int(row["id"]))
+                event_id  = int(row["id"])
+                emoji     = CATEGORY_EMOJIS.get(row["category"], "📌")
+                fav       = is_favorite(event_id)
+                reg_count = get_registration_count(event_id)
 
                 with st.container(border=True):
-                    # Category + distance badges
-                    badge_col, spacer = st.columns([3, 1])
+
+                    # ── Badge row ─────────────────────────────────────────────
+                    badge_col, count_col = st.columns([4, 1])
                     with badge_col:
                         tags = f"`{emoji} {row['category']}`"
                         if "distance_km" in row:
                             tags += f"  `📍 {row['distance_km']} km away`"
                         st.markdown(tags)
+                    with count_col:
+                        st.caption(f"👥 {reg_count} going")
 
-                    # Title
+                    # ── Title & meta ──────────────────────────────────────────
                     st.markdown(f"### {row['title']}")
-
-                    # Meta info
                     mcol1, mcol2 = st.columns(2)
                     with mcol1:
                         st.markdown(f"📅 **{row['date']}**")
                     with mcol2:
                         st.markdown(f"📍 **{row['location']}**")
 
-                    # Description
+                    # ── Description ───────────────────────────────────────────
                     desc = str(row.get("description", ""))
                     st.caption(desc[:200] + ("…" if len(desc) > 200 else ""))
 
-                    # Save button
-                    btn_label = "❤️ Saved" if fav else "🤍 Save"
-                    bcol1, _ = st.columns([1, 5])
-                    with bcol1:
-                        if st.button(btn_label, key=f"fav_{row['id']}", disabled=fav, use_container_width=True):
-                            success = add_favorite(int(row["id"]))
-                            if success:
+                    st.divider()
+
+                    # ── Action buttons ────────────────────────────────────────
+                    btn1, btn2, btn3, _ = st.columns([1, 1, 1, 2])
+                    with btn1:
+                        fav_label = "❤️ Saved" if fav else "🤍 Save"
+                        if st.button(fav_label, key=f"fav_{event_id}", disabled=fav, use_container_width=True):
+                            if add_favorite(event_id):
                                 st.toast("Added to favourites! ❤️")
                                 st.rerun()
-                            else:
-                                st.info("Already in favourites.")
+
+                    with btn2:
+                        if st.button("📝 Register", key=f"reg_btn_{event_id}", use_container_width=True):
+                            st.session_state[f"show_reg_{event_id}"] = not st.session_state.get(f"show_reg_{event_id}", False)
+                            st.session_state[f"show_rem_{event_id}"] = False
+
+                    with btn3:
+                        if st.button("🔔 Reminder", key=f"rem_btn_{event_id}", use_container_width=True):
+                            st.session_state[f"show_rem_{event_id}"] = not st.session_state.get(f"show_rem_{event_id}", False)
+                            st.session_state[f"show_reg_{event_id}"] = False
+
+                    # ── Registration form ─────────────────────────────────────
+                    if st.session_state.get(f"show_reg_{event_id}"):
+                        with st.form(key=f"reg_form_{event_id}"):
+                            st.markdown("#### 📝 Register for this Event")
+                            reg_name  = st.text_input("Your Name")
+                            reg_email = st.text_input("Your Email")
+                            reg_phone = st.text_input("Phone (optional)")
+
+                            scol1, scol2 = st.columns(2)
+                            with scol1:
+                                submitted = st.form_submit_button("✅ Confirm", use_container_width=True)
+                            with scol2:
+                                cancelled = st.form_submit_button("✖ Cancel", use_container_width=True)
+
+                            if submitted:
+                                if not reg_name or not reg_email:
+                                    st.warning("Please fill in your name and email.")
+                                elif is_registered(event_id, reg_email):
+                                    st.info("You're already registered for this event!")
+                                else:
+                                    if register_for_event(event_id, reg_name, reg_email, reg_phone):
+                                        st.session_state[f"show_reg_{event_id}"] = False
+                                        st.toast(f"Registered for {row['title']}! 🎉")
+                                        st.rerun()
+                                    else:
+                                        st.error("Registration failed. Please try again.")
+                            if cancelled:
+                                st.session_state[f"show_reg_{event_id}"] = False
+                                st.rerun()
+
+                    # ── Reminder form ─────────────────────────────────────────
+                    if st.session_state.get(f"show_rem_{event_id}"):
+                        with st.form(key=f"rem_form_{event_id}"):
+                            st.markdown("#### 🔔 Set a Reminder")
+                            rem_name  = st.text_input("Your Name")
+                            rem_email = st.text_input("Your Email")
+                            rem_days  = st.selectbox(
+                                "Remind me",
+                                [1, 2, 3, 7],
+                                format_func=lambda d: f"{d} day{'s' if d > 1 else ''} before",
+                            )
+
+                            rcol1, rcol2 = st.columns(2)
+                            with rcol1:
+                                rem_submitted = st.form_submit_button("🔔 Set Reminder", use_container_width=True)
+                            with rcol2:
+                                rem_cancelled = st.form_submit_button("✖ Cancel", use_container_width=True)
+
+                            if rem_submitted:
+                                if not rem_name or not rem_email:
+                                    st.warning("Please fill in your name and email.")
+                                elif has_reminder(event_id, rem_email):
+                                    st.info("You already have a reminder set for this event!")
+                                else:
+                                    if set_reminder(event_id, rem_name, rem_email, rem_days):
+                                        st.session_state[f"show_rem_{event_id}"] = False
+                                        st.toast(f"Reminder set {rem_days} day{'s' if rem_days > 1 else ''} before {row['title']}! 🔔")
+                                        st.rerun()
+                                    else:
+                                        st.error("Could not set reminder. Please try again.")
+                            if rem_cancelled:
+                                st.session_state[f"show_rem_{event_id}"] = False
+                                st.rerun()
 
     # ── Tab 2: Map View ───────────────────────────────────────────────────────
     with tab2:
