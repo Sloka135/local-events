@@ -9,39 +9,25 @@ CUSTOM_CSS = """
 /* Google Font ----------------------*/
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
-/* --- CSS Variables ---------------------- */
-:root {
-    --sand:        #F2EDE4;
-    --sand2:       #EAE3D8;
-    --sand3:       #DDD4C5;
-    --terracotta:  #B06B4A;
-    --terracotta2: #8F5438;
-    --bark:        #3B2F26;
-    --bark2:       #2A1A10;
-    --stone:       #7A6E65;
-    --stone2:      #A8A099;
-    --white:       #FDFAF6;
-}
-
 /* --- Global reset ----------------------- */
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
-    color: var(--bark2);
+    color: #E0E0FF;
 }
 
 /* --- Page background -------------------- */
 .stApp {
-    background: var(--white);
+    background: #0F0F1A;
 }
 
 /* --- Sidebar ---------------------------- */
 [data-testid="stSidebar"] {
-    background: var(--sand) !important;
-    border-right: 1px solid var(--sand3);
+    background: #13131F !important;
+    border-right: 1px solid #1E1E30;
 }
 
 [data-testid="stSidebar"] * {
-    color: var(--bark) !important;
+    color: #E0E0FF !important;
 }
 
 /* --- Hide Streamlit default page nav --- */
@@ -51,8 +37,8 @@ html, body, [class*="css"] {
 
 /* --- Buttons ---------------------------- */
 .stButton > button {
-    background: linear-gradient(135deg, var(--terracotta), var(--terracotta2));
-    color: var(--white);
+    background: linear-gradient(135deg, #6C63FF, #4ECDC4);
+    color: white;
     border: none;
     border-radius: 8px;
     padding: 0.5rem 1.2rem;
@@ -64,42 +50,42 @@ html, body, [class*="css"] {
 
 .stButton > button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(176, 107, 74, 0.35);
+    box-shadow: 0 4px 20px rgba(108, 99, 255, 0.4);
 }
 
 /* --- Input fields ----------------------- */
 .stTextInput > div > div > input,
 .stTextArea > div > div > textarea,
 .stSelectbox > div > div {
-    background: var(--white) !important;
-    border: 1px solid var(--sand3) !important;
+    background: #1A1A2E !important;
+    border: 1px solid #2A2A40 !important;
     border-radius: 8px !important;
-    color: var(--bark2) !important;
+    color: #E0E0FF !important;
 }
 
 .stTextInput > div > div > input:focus,
 .stTextArea > div > div > textarea:focus {
-    border-color: var(--terracotta) !important;
-    box-shadow: 0 0 0 2px rgba(176, 107, 74, 0.15) !important;
+    border-color: #6C63FF !important;
+    box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2) !important;
 }
 
 /* --- Metric boxes ----------------------- */
 [data-testid="stMetric"] {
-    background: var(--sand);
-    border: 1px solid var(--sand3);
+    background: #13131F;
+    border: 1px solid #1E1E30;
     border-radius: 10px;
     padding: 1rem;
 }
 
 [data-testid="stMetricValue"] {
-    color: var(--terracotta) !important;
+    color: #6C63FF !important;
     font-family: 'Syne', sans-serif;
     font-weight: 800;
 }
 
 /* --- Tabs ------------------------------- */
 .stTabs [data-baseweb="tab-list"] {
-    background: var(--sand2);
+    background: #13131F;
     border-radius: 10px;
     padding: 0.3rem;
     gap: 0.3rem;
@@ -108,19 +94,19 @@ html, body, [class*="css"] {
 .stTabs [data-baseweb="tab"] {
     background: transparent;
     border-radius: 8px;
-    color: var(--stone);
+    color: #4A4A7A;
     font-weight: 500;
     padding: 0.4rem 1rem;
 }
 
 .stTabs [aria-selected="true"] {
-    background: var(--terracotta) !important;
-    color: var(--white) !important;
+    background: #6C63FF !important;
+    color: white !important;
 }
 
 /* --- Dividers --------------------------- */
 hr {
-    border-color: var(--sand3);
+    border-color: #2A2A40;
     margin: 1rem 0;
 }
 
@@ -130,30 +116,30 @@ hr {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--sand2);
+    background: #0F0F1A;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--sand3);
+    background: #2A2A40;
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--terracotta);
+    background: #6C63FF;
 }
 
 /* --- Headers ---------------------------- */
 h1, h2, h3 {
     font-family: 'Syne', sans-serif;
-    color: var(--bark2);
+    color: #E0E0FF;
 }
 
 /* --- Badges / tags ---------------------- */
 .tag {
     display: inline-block;
-    background: rgba(176, 107, 74, 0.1);
-    color: var(--terracotta);
-    border: 1px solid rgba(176, 107, 74, 0.25);
+    background: rgba(108, 99, 255, 0.15);
+    color: #6C63FF;
+    border: 1px solid rgba(108, 99, 255, 0.3);
     border-radius: 20px;
     padding: 0.15rem 0.7rem;
     font-size: 0.75rem;
@@ -163,19 +149,19 @@ h1, h2, h3 {
 
 /* --- Success / error messages ----------- */
 .stSuccess {
-    background: rgba(176, 107, 74, 0.08) !important;
-    border-color: var(--terracotta) !important;
-    color: var(--terracotta2) !important;
+    background: rgba(78, 205, 196, 0.1) !important;
+    border-color: #4ECDC4 !important;
+    color: #4ECDC4 !important;
 }
 
 .stError {
-    background: rgba(180, 60, 40, 0.08) !important;
-    border-color: #B43C28 !important;
+    background: rgba(255, 99, 99, 0.1) !important;
+    border-color: #FF6363 !important;
 }
 
 /* --- Dataframe / table ------------------ */
 .stDataFrame {
-    border: 1px solid var(--sand3);
+    border: 1px solid #1E1E30;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -190,28 +176,28 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 2.8rem;
     font-weight: 800;
-    color: var(--bark2);
+    color: #E0E0FF;
     line-height: 1.15;
     margin-bottom: 1rem;
 }
 
 .hero-title span {
-    background: linear-gradient(135deg, var(--terracotta), var(--terracotta2));
+    background: linear-gradient(135deg, #6C63FF, #4ECDC4);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .hero-subtitle {
     font-size: 1rem;
-    color: var(--stone);
+    color: #7070A0;
     max-width: 560px;
     line-height: 1.6;
 }
 
 /* --- Stat cards ------------------------- */
 .stat-card {
-    background: var(--sand);
-    border: 1px solid var(--sand3);
+    background: #13131F;
+    border: 1px solid #1E1E30;
     border-radius: 12px;
     padding: 1.2rem;
     text-align: center;
@@ -221,19 +207,19 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 2rem;
     font-weight: 800;
-    color: var(--terracotta);
+    color: #6C63FF;
 }
 
 .stat-label {
     font-size: 0.8rem;
-    color: var(--stone);
+    color: #6A6A9A;
     margin-top: 0.2rem;
 }
 
 /* --- Nav cards -------------------------- */
 .nav-card {
-    background: var(--sand);
-    border: 1px solid var(--sand3);
+    background: #13131F;
+    border: 1px solid #1E1E30;
     border-radius: 12px;
     padding: 1.2rem;
     text-align: center;
@@ -242,8 +228,7 @@ h1, h2, h3 {
 }
 
 .nav-card:hover {
-    border-color: var(--terracotta);
-    box-shadow: 0 4px 20px rgba(176, 107, 74, 0.12);
+    border-color: #6C63FF;
 }
 
 .nav-card-icon {
@@ -255,19 +240,19 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: var(--bark);
+    color: #E0E0FF;
     margin-bottom: 0.3rem;
 }
 
 .nav-card-desc {
     font-size: 0.78rem;
-    color: var(--stone);
+    color: #6A6A9A;
 }
 
 /* --- Event Cards ----------------------- */
 .event-card {
-    background: var(--sand);
-    border: 1px solid var(--sand3);
+    background: #13131F;
+    border: 1px solid #1E1E30;
     border-radius: 12px;
     padding: 1.2rem 1.4rem;
     margin-bottom: 1rem;
@@ -275,15 +260,15 @@ h1, h2, h3 {
 }
 
 .event-card:hover {
-    border-color: var(--terracotta);
-    box-shadow: 0 4px 24px rgba(176, 107, 74, 0.12);
+    border-color: #6C63FF;
+    box-shadow: 0 4px 24px rgba(108, 99, 255, 0.15);
 }
 
 .event-card-title {
     font-family: 'Syne', sans-serif;
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--bark2);
+    color: #E0E0FF;
     margin: 0.5rem 0 0.4rem 0;
 }
 
@@ -291,22 +276,22 @@ h1, h2, h3 {
     display: flex;
     gap: 1.2rem;
     font-size: 0.82rem;
-    color: var(--stone);
+    color: #6A6A9A;
     margin-bottom: 0.5rem;
 }
 
 .event-description {
     font-size: 0.88rem;
-    color: var(--stone2);
+    color: #9090B0;
     line-height: 1.5;
 }
 
 /* --- Category & score badges ------------ */
 .category-badge {
     display: inline-block;
-    background: rgba(176, 107, 74, 0.1);
-    color: var(--terracotta2);
-    border: 1px solid rgba(176, 107, 74, 0.2);
+    background: rgba(108, 99, 255, 0.12);
+    color: #A5A0FF;
+    border: 1px solid rgba(108, 99, 255, 0.25);
     border-radius: 20px;
     padding: 0.15rem 0.75rem;
     font-size: 0.75rem;
@@ -316,9 +301,9 @@ h1, h2, h3 {
 
 .distance-badge {
     display: inline-block;
-    background: rgba(122, 110, 101, 0.1);
-    color: var(--stone);
-    border: 1px solid rgba(122, 110, 101, 0.2);
+    background: rgba(78, 205, 196, 0.12);
+    color: #4ECDC4;
+    border: 1px solid rgba(78, 205, 196, 0.25);
     border-radius: 20px;
     padding: 0.15rem 0.75rem;
     font-size: 0.75rem;
@@ -329,9 +314,9 @@ h1, h2, h3 {
 
 .score-badge {
     display: inline-block;
-    background: rgba(176, 107, 74, 0.1);
-    color: var(--terracotta2);
-    border: 1px solid rgba(176, 107, 74, 0.2);
+    background: rgba(255, 193, 7, 0.12);
+    color: #FFC107;
+    border: 1px solid rgba(255, 193, 7, 0.25);
     border-radius: 20px;
     padding: 0.15rem 0.75rem;
     font-size: 0.75rem;
@@ -345,13 +330,13 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 1.4rem;
     font-weight: 800;
-    color: var(--bark2);
+    color: #E0E0FF;
     margin-bottom: 0.2rem;
 }
 
 .section-sub {
     font-size: 0.88rem;
-    color: var(--stone);
+    color: #6A6A9A;
     margin-bottom: 1.2rem;
 }
 
@@ -368,7 +353,7 @@ h1, h2, h3 {
 
 .empty-state-text {
     font-size: 1rem;
-    color: var(--stone);
+    color: #6A6A9A;
 }
 
 /* --- Hide Streamlit default elements ---- */
@@ -394,7 +379,7 @@ CATEGORY_EMOJIS = {
     "Fitness":       "💪",
     "Gaming":        "🎮",
     "Fashion":       "👗",
-    --Travel":        "✈️",
+    "Travel":        "✈️",
     "Networking":    "🔗",
     "Comedy":        "😂",
     "Film":          "🎬",
