@@ -12,22 +12,22 @@ CUSTOM_CSS = """
 /* --- Global reset ----------------------- */
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
-    color: #E0E0FF;
+    color: #F2EDE4;
 }
 
 /* --- Page background -------------------- */
 .stApp {
-    background: #0F0F1A;
+    background: #2A1A10;
 }
 
 /* --- Sidebar ---------------------------- */
 [data-testid="stSidebar"] {
-    background: #13131F !important;
-    border-right: 1px solid #1E1E30;
+    background: #3B2F26 !important;
+    border-right: 1px solid #4A3828;
 }
 
 [data-testid="stSidebar"] * {
-    color: #E0E0FF !important;
+    color: #F2EDE4 !important;
 }
 
 /* --- Hide Streamlit default page nav --- */
@@ -37,8 +37,8 @@ html, body, [class*="css"] {
 
 /* --- Buttons ---------------------------- */
 .stButton > button {
-    background: linear-gradient(135deg, #6C63FF, #4ECDC4);
-    color: white;
+    background: linear-gradient(135deg, #B06B4A, #8B4F32);
+    color: #F2EDE4;
     border: none;
     border-radius: 8px;
     padding: 0.5rem 1.2rem;
@@ -50,42 +50,42 @@ html, body, [class*="css"] {
 
 .stButton > button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(108, 99, 255, 0.4);
+    box-shadow: 0 4px 20px rgba(176, 107, 74, 0.4);
 }
 
 /* --- Input fields ----------------------- */
 .stTextInput > div > div > input,
 .stTextArea > div > div > textarea,
 .stSelectbox > div > div {
-    background: #1A1A2E !important;
-    border: 1px solid #2A2A40 !important;
+    background: #3B2F26 !important;
+    border: 1px solid #4A3828 !important;
     border-radius: 8px !important;
-    color: #E0E0FF !important;
+    color: #F2EDE4 !important;
 }
 
 .stTextInput > div > div > input:focus,
 .stTextArea > div > div > textarea:focus {
-    border-color: #6C63FF !important;
-    box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2) !important;
+    border-color: #B06B4A !important;
+    box-shadow: 0 0 0 2px rgba(176, 107, 74, 0.2) !important;
 }
 
 /* --- Metric boxes ----------------------- */
 [data-testid="stMetric"] {
-    background: #13131F;
-    border: 1px solid #1E1E30;
+    background: #3B2F26;
+    border: 1px solid #4A3828;
     border-radius: 10px;
     padding: 1rem;
 }
 
 [data-testid="stMetricValue"] {
-    color: #6C63FF !important;
+    color: #B06B4A !important;
     font-family: 'Syne', sans-serif;
     font-weight: 800;
 }
 
 /* --- Tabs ------------------------------- */
 .stTabs [data-baseweb="tab-list"] {
-    background: #13131F;
+    background: #3B2F26;
     border-radius: 10px;
     padding: 0.3rem;
     gap: 0.3rem;
@@ -94,19 +94,19 @@ html, body, [class*="css"] {
 .stTabs [data-baseweb="tab"] {
     background: transparent;
     border-radius: 8px;
-    color: #4A4A7A;
+    color: #8A7A6A;
     font-weight: 500;
     padding: 0.4rem 1rem;
 }
 
 .stTabs [aria-selected="true"] {
-    background: #6C63FF !important;
-    color: white !important;
+    background: #B06B4A !important;
+    color: #F2EDE4 !important;
 }
 
 /* --- Dividers --------------------------- */
 hr {
-    border-color: #2A2A40;
+    border-color: #4A3828;
     margin: 1rem 0;
 }
 
@@ -116,30 +116,30 @@ hr {
 }
 
 ::-webkit-scrollbar-track {
-    background: #0F0F1A;
+    background: #2A1A10;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #2A2A40;
+    background: #4A3828;
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #6C63FF;
+    background: #B06B4A;
 }
 
 /* --- Headers ---------------------------- */
 h1, h2, h3 {
     font-family: 'Syne', sans-serif;
-    color: #E0E0FF;
+    color: #F2EDE4;
 }
 
 /* --- Badges / tags ---------------------- */
 .tag {
     display: inline-block;
-    background: rgba(108, 99, 255, 0.15);
-    color: #6C63FF;
-    border: 1px solid rgba(108, 99, 255, 0.3);
+    background: rgba(176, 107, 74, 0.15);
+    color: #B06B4A;
+    border: 1px solid rgba(176, 107, 74, 0.3);
     border-radius: 20px;
     padding: 0.15rem 0.7rem;
     font-size: 0.75rem;
@@ -149,19 +149,19 @@ h1, h2, h3 {
 
 /* --- Success / error messages ----------- */
 .stSuccess {
-    background: rgba(78, 205, 196, 0.1) !important;
-    border-color: #4ECDC4 !important;
-    color: #4ECDC4 !important;
+    background: rgba(176, 107, 74, 0.1) !important;
+    border-color: #B06B4A !important;
+    color: #B06B4A !important;
 }
 
 .stError {
-    background: rgba(255, 99, 99, 0.1) !important;
-    border-color: #FF6363 !important;
+    background: rgba(180, 60, 40, 0.1) !important;
+    border-color: #B43C28 !important;
 }
 
 /* --- Dataframe / table ------------------ */
 .stDataFrame {
-    border: 1px solid #1E1E30;
+    border: 1px solid #4A3828;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -176,28 +176,28 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 2.8rem;
     font-weight: 800;
-    color: #E0E0FF;
+    color: #F2EDE4;
     line-height: 1.15;
     margin-bottom: 1rem;
 }
 
 .hero-title span {
-    background: linear-gradient(135deg, #6C63FF, #4ECDC4);
+    background: linear-gradient(135deg, #B06B4A, #D4956A);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .hero-subtitle {
     font-size: 1rem;
-    color: #7070A0;
+    color: #A89880;
     max-width: 560px;
     line-height: 1.6;
 }
 
 /* --- Stat cards ------------------------- */
 .stat-card {
-    background: #13131F;
-    border: 1px solid #1E1E30;
+    background: #3B2F26;
+    border: 1px solid #4A3828;
     border-radius: 12px;
     padding: 1.2rem;
     text-align: center;
@@ -207,19 +207,19 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 2rem;
     font-weight: 800;
-    color: #6C63FF;
+    color: #B06B4A;
 }
 
 .stat-label {
     font-size: 0.8rem;
-    color: #6A6A9A;
+    color: #8A7A6A;
     margin-top: 0.2rem;
 }
 
 /* --- Nav cards -------------------------- */
 .nav-card {
-    background: #13131F;
-    border: 1px solid #1E1E30;
+    background: #3B2F26;
+    border: 1px solid #4A3828;
     border-radius: 12px;
     padding: 1.2rem;
     text-align: center;
@@ -228,7 +228,7 @@ h1, h2, h3 {
 }
 
 .nav-card:hover {
-    border-color: #6C63FF;
+    border-color: #B06B4A;
 }
 
 .nav-card-icon {
@@ -240,19 +240,19 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #E0E0FF;
+    color: #F2EDE4;
     margin-bottom: 0.3rem;
 }
 
 .nav-card-desc {
     font-size: 0.78rem;
-    color: #6A6A9A;
+    color: #8A7A6A;
 }
 
 /* --- Event Cards ----------------------- */
 .event-card {
-    background: #13131F;
-    border: 1px solid #1E1E30;
+    background: #3B2F26;
+    border: 1px solid #4A3828;
     border-radius: 12px;
     padding: 1.2rem 1.4rem;
     margin-bottom: 1rem;
@@ -260,15 +260,15 @@ h1, h2, h3 {
 }
 
 .event-card:hover {
-    border-color: #6C63FF;
-    box-shadow: 0 4px 24px rgba(108, 99, 255, 0.15);
+    border-color: #B06B4A;
+    box-shadow: 0 4px 24px rgba(176, 107, 74, 0.15);
 }
 
 .event-card-title {
     font-family: 'Syne', sans-serif;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #E0E0FF;
+    color: #F2EDE4;
     margin: 0.5rem 0 0.4rem 0;
 }
 
@@ -276,22 +276,22 @@ h1, h2, h3 {
     display: flex;
     gap: 1.2rem;
     font-size: 0.82rem;
-    color: #6A6A9A;
+    color: #8A7A6A;
     margin-bottom: 0.5rem;
 }
 
 .event-description {
     font-size: 0.88rem;
-    color: #9090B0;
+    color: #A89880;
     line-height: 1.5;
 }
 
 /* --- Category & score badges ------------ */
 .category-badge {
     display: inline-block;
-    background: rgba(108, 99, 255, 0.12);
-    color: #A5A0FF;
-    border: 1px solid rgba(108, 99, 255, 0.25);
+    background: rgba(176, 107, 74, 0.12);
+    color: #D4956A;
+    border: 1px solid rgba(176, 107, 74, 0.25);
     border-radius: 20px;
     padding: 0.15rem 0.75rem;
     font-size: 0.75rem;
@@ -301,9 +301,9 @@ h1, h2, h3 {
 
 .distance-badge {
     display: inline-block;
-    background: rgba(78, 205, 196, 0.12);
-    color: #4ECDC4;
-    border: 1px solid rgba(78, 205, 196, 0.25);
+    background: rgba(176, 140, 74, 0.12);
+    color: #C4A45A;
+    border: 1px solid rgba(176, 140, 74, 0.25);
     border-radius: 20px;
     padding: 0.15rem 0.75rem;
     font-size: 0.75rem;
@@ -314,9 +314,9 @@ h1, h2, h3 {
 
 .score-badge {
     display: inline-block;
-    background: rgba(255, 193, 7, 0.12);
-    color: #FFC107;
-    border: 1px solid rgba(255, 193, 7, 0.25);
+    background: rgba(180, 130, 60, 0.12);
+    color: #C8A050;
+    border: 1px solid rgba(180, 130, 60, 0.25);
     border-radius: 20px;
     padding: 0.15rem 0.75rem;
     font-size: 0.75rem;
@@ -330,13 +330,13 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 1.4rem;
     font-weight: 800;
-    color: #E0E0FF;
+    color: #F2EDE4;
     margin-bottom: 0.2rem;
 }
 
 .section-sub {
     font-size: 0.88rem;
-    color: #6A6A9A;
+    color: #8A7A6A;
     margin-bottom: 1.2rem;
 }
 
@@ -353,7 +353,7 @@ h1, h2, h3 {
 
 .empty-state-text {
     font-size: 1rem;
-    color: #6A6A9A;
+    color: #8A7A6A;
 }
 
 /* --- Hide Streamlit default elements ---- */
