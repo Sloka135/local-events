@@ -9,25 +9,39 @@ CUSTOM_CSS = """
 /* Google Font ----------------------*/
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
+/* --- CSS Variables ---------------------- */
+:root {
+    --sand:        #F2EDE4;
+    --sand2:       #EAE3D8;
+    --sand3:       #DDD4C5;
+    --terracotta:  #B06B4A;
+    --terracotta2: #8F5438;
+    --bark:        #3B2F26;
+    --bark2:       #2A1A10;
+    --stone:       #7A6E65;
+    --stone2:      #A8A099;
+    --white:       #FDFAF6;
+}
+
 /* --- Global reset ----------------------- */
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
-    color: #F2EDE4;
+    color: var(--sand);
 }
 
 /* --- Page background -------------------- */
 .stApp {
-    background: #2A1A10;
+    background: var(--bark2);
 }
 
 /* --- Sidebar ---------------------------- */
 [data-testid="stSidebar"] {
-    background: #3B2F26 !important;
+    background: var(--bark) !important;
     border-right: 1px solid #4A3828;
 }
 
 [data-testid="stSidebar"] * {
-    color: #F2EDE4 !important;
+    color: var(--sand) !important;
 }
 
 /* --- Hide Streamlit default page nav --- */
@@ -37,8 +51,8 @@ html, body, [class*="css"] {
 
 /* --- Buttons ---------------------------- */
 .stButton > button {
-    background: linear-gradient(135deg, #B06B4A, #8B4F32);
-    color: #F2EDE4;
+    background: linear-gradient(135deg, var(--terracotta), var(--terracotta2));
+    color: var(--white);
     border: none;
     border-radius: 8px;
     padding: 0.5rem 1.2rem;
@@ -57,35 +71,35 @@ html, body, [class*="css"] {
 .stTextInput > div > div > input,
 .stTextArea > div > div > textarea,
 .stSelectbox > div > div {
-    background: #3B2F26 !important;
+    background: var(--bark) !important;
     border: 1px solid #4A3828 !important;
     border-radius: 8px !important;
-    color: #F2EDE4 !important;
+    color: var(--sand) !important;
 }
 
 .stTextInput > div > div > input:focus,
 .stTextArea > div > div > textarea:focus {
-    border-color: #B06B4A !important;
+    border-color: var(--terracotta) !important;
     box-shadow: 0 0 0 2px rgba(176, 107, 74, 0.2) !important;
 }
 
 /* --- Metric boxes ----------------------- */
 [data-testid="stMetric"] {
-    background: #3B2F26;
+    background: var(--bark);
     border: 1px solid #4A3828;
     border-radius: 10px;
     padding: 1rem;
 }
 
 [data-testid="stMetricValue"] {
-    color: #B06B4A !important;
+    color: var(--terracotta) !important;
     font-family: 'Syne', sans-serif;
     font-weight: 800;
 }
 
 /* --- Tabs ------------------------------- */
 .stTabs [data-baseweb="tab-list"] {
-    background: #3B2F26;
+    background: var(--bark);
     border-radius: 10px;
     padding: 0.3rem;
     gap: 0.3rem;
@@ -94,14 +108,14 @@ html, body, [class*="css"] {
 .stTabs [data-baseweb="tab"] {
     background: transparent;
     border-radius: 8px;
-    color: #8A7A6A;
+    color: var(--stone);
     font-weight: 500;
     padding: 0.4rem 1rem;
 }
 
 .stTabs [aria-selected="true"] {
-    background: #B06B4A !important;
-    color: #F2EDE4 !important;
+    background: var(--terracotta) !important;
+    color: var(--white) !important;
 }
 
 /* --- Dividers --------------------------- */
@@ -116,7 +130,7 @@ hr {
 }
 
 ::-webkit-scrollbar-track {
-    background: #2A1A10;
+    background: var(--bark2);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -125,20 +139,20 @@ hr {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #B06B4A;
+    background: var(--terracotta);
 }
 
 /* --- Headers ---------------------------- */
 h1, h2, h3 {
     font-family: 'Syne', sans-serif;
-    color: #F2EDE4;
+    color: var(--white);
 }
 
 /* --- Badges / tags ---------------------- */
 .tag {
     display: inline-block;
     background: rgba(176, 107, 74, 0.15);
-    color: #B06B4A;
+    color: var(--terracotta);
     border: 1px solid rgba(176, 107, 74, 0.3);
     border-radius: 20px;
     padding: 0.15rem 0.7rem;
@@ -150,8 +164,8 @@ h1, h2, h3 {
 /* --- Success / error messages ----------- */
 .stSuccess {
     background: rgba(176, 107, 74, 0.1) !important;
-    border-color: #B06B4A !important;
-    color: #B06B4A !important;
+    border-color: var(--terracotta) !important;
+    color: var(--terracotta) !important;
 }
 
 .stError {
@@ -176,27 +190,27 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 2.8rem;
     font-weight: 800;
-    color: #F2EDE4;
+    color: var(--white);
     line-height: 1.15;
     margin-bottom: 1rem;
 }
 
 .hero-title span {
-    background: linear-gradient(135deg, #B06B4A, #D4956A);
+    background: linear-gradient(135deg, var(--terracotta), #D4956A);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .hero-subtitle {
     font-size: 1rem;
-    color: #A89880;
+    color: var(--stone2);
     max-width: 560px;
     line-height: 1.6;
 }
 
 /* --- Stat cards ------------------------- */
 .stat-card {
-    background: #3B2F26;
+    background: var(--bark);
     border: 1px solid #4A3828;
     border-radius: 12px;
     padding: 1.2rem;
@@ -207,18 +221,18 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 2rem;
     font-weight: 800;
-    color: #B06B4A;
+    color: var(--terracotta);
 }
 
 .stat-label {
     font-size: 0.8rem;
-    color: #8A7A6A;
+    color: var(--stone);
     margin-top: 0.2rem;
 }
 
 /* --- Nav cards -------------------------- */
 .nav-card {
-    background: #3B2F26;
+    background: var(--bark);
     border: 1px solid #4A3828;
     border-radius: 12px;
     padding: 1.2rem;
@@ -228,7 +242,8 @@ h1, h2, h3 {
 }
 
 .nav-card:hover {
-    border-color: #B06B4A;
+    border-color: var(--terracotta);
+    box-shadow: 0 4px 20px rgba(176, 107, 74, 0.15);
 }
 
 .nav-card-icon {
@@ -240,18 +255,18 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #F2EDE4;
+    color: var(--white);
     margin-bottom: 0.3rem;
 }
 
 .nav-card-desc {
     font-size: 0.78rem;
-    color: #8A7A6A;
+    color: var(--stone);
 }
 
 /* --- Event Cards ----------------------- */
 .event-card {
-    background: #3B2F26;
+    background: var(--bark);
     border: 1px solid #4A3828;
     border-radius: 12px;
     padding: 1.2rem 1.4rem;
@@ -260,7 +275,7 @@ h1, h2, h3 {
 }
 
 .event-card:hover {
-    border-color: #B06B4A;
+    border-color: var(--terracotta);
     box-shadow: 0 4px 24px rgba(176, 107, 74, 0.15);
 }
 
@@ -268,7 +283,7 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #F2EDE4;
+    color: var(--white);
     margin: 0.5rem 0 0.4rem 0;
 }
 
@@ -276,13 +291,13 @@ h1, h2, h3 {
     display: flex;
     gap: 1.2rem;
     font-size: 0.82rem;
-    color: #8A7A6A;
+    color: var(--stone);
     margin-bottom: 0.5rem;
 }
 
 .event-description {
     font-size: 0.88rem;
-    color: #A89880;
+    color: var(--stone2);
     line-height: 1.5;
 }
 
@@ -301,9 +316,9 @@ h1, h2, h3 {
 
 .distance-badge {
     display: inline-block;
-    background: rgba(176, 140, 74, 0.12);
-    color: #C4A45A;
-    border: 1px solid rgba(176, 140, 74, 0.25);
+    background: rgba(168, 160, 153, 0.12);
+    color: var(--stone2);
+    border: 1px solid rgba(168, 160, 153, 0.25);
     border-radius: 20px;
     padding: 0.15rem 0.75rem;
     font-size: 0.75rem;
@@ -314,9 +329,9 @@ h1, h2, h3 {
 
 .score-badge {
     display: inline-block;
-    background: rgba(180, 130, 60, 0.12);
-    color: #C8A050;
-    border: 1px solid rgba(180, 130, 60, 0.25);
+    background: rgba(176, 107, 74, 0.12);
+    color: #D4956A;
+    border: 1px solid rgba(176, 107, 74, 0.25);
     border-radius: 20px;
     padding: 0.15rem 0.75rem;
     font-size: 0.75rem;
@@ -330,13 +345,13 @@ h1, h2, h3 {
     font-family: 'Syne', sans-serif;
     font-size: 1.4rem;
     font-weight: 800;
-    color: #F2EDE4;
+    color: var(--white);
     margin-bottom: 0.2rem;
 }
 
 .section-sub {
     font-size: 0.88rem;
-    color: #8A7A6A;
+    color: var(--stone);
     margin-bottom: 1.2rem;
 }
 
@@ -353,7 +368,7 @@ h1, h2, h3 {
 
 .empty-state-text {
     font-size: 1rem;
-    color: #8A7A6A;
+    color: var(--stone);
 }
 
 /* --- Hide Streamlit default elements ---- */
