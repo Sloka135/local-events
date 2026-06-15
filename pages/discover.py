@@ -5,11 +5,93 @@ add-to-favorites, map view, and content-based recommendations.
 """
 
 import streamlit as st
+import streamlit.components.v1 as components
 from streamlit_folium import st_folium
 from utils.database import get_all_events, add_favorite, is_favorite, get_stats
 from utils.recommender import search_events, filter_nearby_events, recommend_events
 from utils.maps import build_events_map
 from utils.styles import CATEGORIES, CATEGORY_EMOJIS
+
+
+def event_card_html(emoji, category, dist_badge, title, date, location, description):
+    css = """
+    <style>
+    .event-card {
+        background: #13131F;
+        border: 1px solid #1E1E30;
+        border-radius: 12px;
+        padding: 1.2rem 1.4rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Inter', sans-serif;
+    }
+    .category-badge {
+        display: inline-block;
+        background: rgba(108,99,255,0.12);
+        color: #A5A0FF;
+        border: 1px solid rgba(108,99,255,0.25);
+        border-radius: 20px;
+        padding: 0.15rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-bottom: 0.4rem;
+    }
+    .distance-badge {
+        display: inline-block;
+        background: rgba(78,205,196,0.12);
+        color: #4ECDC4;
+        border: 1px solid rgba(78,205,196,0.25);
+        border-radius: 20px;
+        padding: 0.15rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-left: 0.4rem;
+        margin-bottom: 0.4rem;
+    }
+    .score-badge {
+        display: inline-block;
+        background: rgba(255,193,7,0.12);
+        color: #FFC107;
+        border: 1px solid rgba(255,193,7,0.25);
+        border-radius: 20px;
+        padding: 0.15rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-left: 0.4rem;
+        margin-bottom: 0.4rem;
+    }
+    .event-card-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #E0E0FF;
+        margin: 0.5rem 0 0.4rem 0;
+    }
+    .event-meta {
+        display: flex;
+        gap: 1.2rem;
+        font-size: 0.82rem;
+        color: #6A6A9A;
+        margin-bottom: 0.5rem;
+    }
+    .event-description {
+        font-size: 0.88rem;
+        color: #9090B0;
+        line-height: 1.5;
+    }
+    </style>
+    """
+    html = (
+        '<div class="event-card">'
+        '<div class="category-badge">' + emoji + " " + category + "</div>"
+        + dist_badge
+        + '<div class="event-card-title">' + title + "</div>"
+        + '<div class="event-meta">'
+        + "<span>📅 " + date + "</span>"
+        + "<span>📍 " + location + "</span>"
+        + "</div>"
+        + '<div class="event-description">' + description + "</div>"
+        + "</div>"
+    )
+    return css + html
 
 
 def render():
@@ -53,7 +135,7 @@ def render():
     if use_nearby:
         filtered = filter_nearby_events(filtered, user_lat, user_lon, radius)
 
-    # ── Tabs: Cards | Map | Recommendations ──────────────────────────────────
+    # ── Tabs ──────────────────────────────────────────────────────────────────
     tab1, tab2, tab3 = st.tabs(["📋 Event Cards", "🗺️ Map View", "✨ Recommendations"])
 
     # ── Tab 1: Event Cards ────────────────────────────────────────────────────
@@ -69,24 +151,27 @@ def render():
             """, unsafe_allow_html=True)
         else:
             for _, row in filtered.iterrows():
-                emoji = CATEGORY_EMOJIS.get(row["category"], "📌")
-                fav   = is_favorite(int(row["id"]))
+                emoji      = CATEGORY_EMOJIS.get(row["category"], "📌")
+                fav        = is_favorite(int(row["id"]))
                 dist_badge = (
-                    f'<span class="distance-badge">📍 {row["distance_km"]} km away</span>'
+                    '<span class="distance-badge">📍 ' + str(row["distance_km"]) + " km away</span>"
                     if "distance_km" in row else ""
                 )
-                st.markdown(f"""
-                <div class="event-card">
-                    <div class="category-badge">{emoji} {row['category']}</div>
-                    {dist_badge}
-                    <div class="event-card-title">{row['title']}</div>
-                    <div class="event-meta">
-                        <span>📅 {row['date']}</span>
-                        <span>📍 {row['location']}</span>
-                    </div>
-                    <div class="event-description">{str(row.get('description',''))[:200]}{"…" if len(str(row.get('description',''))) > 200 else ""}</div>
-                </div>
-                """, unsafe_allow_html=True)
+                desc       = str(row.get("description", ""))
+                short_desc = desc[:200] + ("…" if len(desc) > 200 else "")
+
+                components.html(
+                    event_card_html(
+                        emoji,
+                        str(row["category"]),
+                        dist_badge,
+                        str(row["title"]),
+                        str(row["date"]),
+                        str(row["location"]),
+                        short_desc,
+                    ),
+                    height=180,
+                )
 
                 btn_label = "❤️ Saved" if fav else "🤍 Save"
                 bcol1, bcol2 = st.columns([1, 5])
@@ -94,7 +179,7 @@ def render():
                     if st.button(btn_label, key=f"fav_{row['id']}", disabled=fav, use_container_width=True):
                         success = add_favorite(int(row["id"]))
                         if success:
-                            st.success("Added to favourites!")
+                            st.toast("Added to favourites! ❤️")
                             st.rerun()
                         else:
                             st.info("Already in favourites.")
@@ -127,17 +212,20 @@ def render():
             else:
                 st.markdown(f"**Top {len(recs)} events matching your interest in {interest}:**")
                 for _, row in recs.iterrows():
-                    emoji = CATEGORY_EMOJIS.get(row["category"], "📌")
+                    emoji     = CATEGORY_EMOJIS.get(row["category"], "📌")
                     score_pct = int(row.get("score", 0) * 100)
-                    st.markdown(f"""
-                    <div class="event-card">
-                        <div class="category-badge">{emoji} {row['category']}</div>
-                        <span class="score-badge">Match: {score_pct}%</span>
-                        <div class="event-card-title">{row['title']}</div>
-                        <div class="event-meta">
-                            <span>📅 {row['date']}</span>
-                            <span>📍 {row['location']}</span>
-                        </div>
-                        <div class="event-description">{str(row.get('description',''))[:160]}…</div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    desc      = str(row.get("description", ""))[:160] + "…"
+                    score_badge = '<span class="score-badge">Match: ' + str(score_pct) + "%</span>"
+
+                    components.html(
+                        event_card_html(
+                            emoji,
+                            str(row["category"]),
+                            score_badge,
+                            str(row["title"]),
+                            str(row["date"]),
+                            str(row["location"]),
+                            desc,
+                        ),
+                        height=180,
+                    )
