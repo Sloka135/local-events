@@ -359,7 +359,9 @@ h1, h2, h3 {
 /* --- Hide Streamlit default elements ---- */
 #MainMenu { visibility: hidden; }
 footer { visibility: hidden; }
-header { visibility: hidden; }
+header {
+    visibility: visible;
+}
 
 </style>
 """
